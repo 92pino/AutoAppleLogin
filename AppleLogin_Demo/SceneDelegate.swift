@@ -21,8 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let viewController = ViewController()
         let navigation = UINavigationController(rootViewController: viewController)
         
-        getCredentialState()
-        
         // window의 rootViewController 를 내가 만든 첫화면Controller로 설정.
         window.rootViewController = navigation
         
@@ -32,6 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func getCredentialState() {
+        print(KeyChain.read())
+        
         if let userID = UserDefaults.standard.string(forKey: "userID"),
            !userID.isEmpty {
             let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -49,6 +49,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
         }
+    }
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        getCredentialState()
     }
 }
 
